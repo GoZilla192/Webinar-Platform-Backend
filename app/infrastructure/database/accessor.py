@@ -4,7 +4,7 @@ from app.infrastructure.database.settings import Settings
 
 settings = Settings()
 
-engine = create_async_engine(settings.postgres_db_url)
+engine = create_async_engine(settings.url_db)
 
 AsyncSessionFactory = async_sessionmaker(engine)
 
