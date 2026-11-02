@@ -6,7 +6,7 @@ settings = Settings()
 
 engine = create_async_engine(settings.url_db)
 
-AsyncSessionFactory = async_sessionmaker(engine)
+AsyncSessionFactory = async_sessionmaker(engine, expire_on_commit=False)
 
 
 async def get_db_session() -> AsyncSession:
