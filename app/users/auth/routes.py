@@ -10,7 +10,17 @@ from app.users.auth.depends import get_auth_service
 router = APIRouter(prefix="/user", tags=["Users"])
 
 
-@router.post("/signup", status_code=status.HTTP_201_CREATED)
+@router.post("/signup",
+             status_code=status.HTTP_201_CREATED,
+             responses={
+		             201: {
+			             "description": "Created",
+		             },
+		             409: {
+			             "description": "Email already registered",
+		             },
+		         },
+)
 async def signup(user: UserCreateSchema, svc: Annotated[AuthService, Depends(get_auth_service)]):
 	try:
 		return await svc.create_user(user)
@@ -21,7 +31,15 @@ async def signup(user: UserCreateSchema, svc: Annotated[AuthService, Depends(get
 		)
 
 
-@router.post("/login")
+@router.post("/login", responses={
+		             200: {
+			             "description": "OK",
+		             },
+		             401: {
+			             "description": "Credentials incorrect",
+		             },
+		         },
+)
 async def login(user: UserCreateSchema, svc: Annotated[AuthService, Depends(get_auth_service)]):
 	try:
 		return await svc.get_jwt_token(user)
