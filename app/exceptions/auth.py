@@ -1,10 +1,7 @@
-
-
 class UserDoesntExists(Exception): ...
+
 
 class UserAlreadyExists(Exception): ...
 
 
 class PasswordIncorrect(Exception): ...
-
-
