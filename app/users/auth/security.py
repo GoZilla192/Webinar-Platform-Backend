@@ -4,7 +4,7 @@ from jose import jwt, JWTError, ExpiredSignatureError
 from jose.exceptions import JWEInvalidAuth
 from passlib.context import CryptContext
 
-from app.users.auth.settings import Settings  # SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.settings import Settings  # SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 

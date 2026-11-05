@@ -1,12 +1,10 @@
 import asyncio
 from logging.config import fileConfig
 from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
 
 from alembic import context
 
-from app.infrastructure.database.settings import Settings
+from app.settings import Settings
 
 settings = Settings()
 
@@ -27,7 +25,6 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 
 from app.infrastructure.database.base_model import Base
-from app.users.models import User
 
 target_metadata = Base.metadata
 

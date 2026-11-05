@@ -1,4 +1,4 @@
-from app.users.auth.settings import Settings
+from app.settings import Settings
 from app.users.repository import UserRepository
 from app.users.schemas import UserCreateSchema, UserReadSchema
 from app.users.models import User
