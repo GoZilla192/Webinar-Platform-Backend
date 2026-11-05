@@ -1,3 +1,4 @@
+from app.exceptions.auth import UserDoesntExists, PasswordIncorrect, UserAlreadyExists
 from app.settings import Settings
 from app.users.repository import UserRepository
 from app.users.schemas import UserCreateSchema, UserReadSchema
@@ -20,8 +21,8 @@ class AuthService:
 	async def get_jwt_token(self, user_schema: UserCreateSchema):
 		user = await self.user_repository.get_user_by_email(user_schema.email)
 		if not user:
-			raise ValueError("User isn't exists")
-		if verify_password(hash_password(user_schema.password), user.password):
-			raise ValueError("Password incorrect")
+			raise UserDoesntExists
+		if not verify_password(user_schema.password, user.password):
+			raise PasswordIncorrect
 		
 		return get_access_token(user.id, self.settings)
