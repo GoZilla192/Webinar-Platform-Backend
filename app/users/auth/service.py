@@ -1,4 +1,4 @@
-from app.exceptions.auth import UserDoesntExists, PasswordIncorrect, UserAlreadyExists
+from app.exceptions.auth import UserDoesntExists, PasswordIncorrect
 from app.settings import Settings
 from app.users.repository import UserRepository
 from app.users.schemas import UserCreateSchema, UserReadSchema
@@ -7,6 +7,12 @@ from app.users.auth.security import hash_password, verify_password, get_access_t
 
 
 class AuthService:
+	"""
+	Service responsible for auth-related business logic.
+	
+	Handles user creation and getting access token
+	"""
+	
 	def __init__(self, user_repository: UserRepository, settings: Settings):
 		self.user_repository = user_repository
 		self.settings = settings
