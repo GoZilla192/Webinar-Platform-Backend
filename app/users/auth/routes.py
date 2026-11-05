@@ -9,8 +9,8 @@ from app.users.auth.depends import get_auth_service
 router = APIRouter(prefix="/user", tags=["Users"])
 
 
-@router.post("/signin")
-async def signin(user: UserCreateSchema, svc: Annotated[AuthService, Depends(get_auth_service)]):
+@router.post("/signup")
+async def signup(user: UserCreateSchema, svc: Annotated[AuthService, Depends(get_auth_service)]):
 	return await svc.create_user(user)
 
 
