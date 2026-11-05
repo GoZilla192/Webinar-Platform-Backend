@@ -1,12 +1,12 @@
 from livekit import api
 from datetime import timedelta
 
-from app.livekit.settings import LiveKitSettings
+from app.settings import Settings
 from app.livekit.schemas import LiveKitTokenRequestSchema, LiveKitTokenResponseSchema
 
 
 class LiveKitService:
-	def __init__(self, settings: LiveKitSettings):
+	def __init__(self, settings: Settings):
 		self.settings = settings
 	
 	def get_token(self, token_request: LiveKitTokenRequestSchema) -> LiveKitTokenResponseSchema:
