@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, HTTPException, Depends, status
 
 from app.users.auth.service import AuthService
-from app.exceptions.auth import UserAlreadyExists, UserDoesntExists, PasswordIncorrect
+from app.users.auth.exceptions import UserAlreadyExists, UserDoesntExists, PasswordIncorrect
 from app.users.schemas import UserCreateSchema
 from app.users.auth.depends import get_auth_service
 

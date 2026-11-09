@@ -2,8 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import select
 
-from app.exceptions.auth import UserAlreadyExists
-from app.users.schemas import UserCreateSchema
+from app.users.auth.exceptions import UserAlreadyExists
 from app.users.models import User
 
 

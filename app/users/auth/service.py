@@ -1,4 +1,4 @@
-from app.exceptions.auth import UserDoesntExists, PasswordIncorrect
+from app.users.auth.exceptions import UserDoesntExists, PasswordIncorrect
 from app.settings import Settings
 from app.users.repository import UserRepository
 from app.users.schemas import UserCreateSchema, UserReadSchema
