@@ -8,10 +8,13 @@ from app.users.models import User
 
 
 class UserRepository:
+	"""Persist and retrieve user records."""
 	def __init__(self, db_session: AsyncSession):
+		"""Initialize the repository with a database session."""
 		self.db_session = db_session
 	
 	async def create_user(self, user: User) -> User:
+		"""Save a user and raise if its email is already registered."""
 		self.db_session.add(user)
 		
 		try:
@@ -23,6 +26,7 @@ class UserRepository:
 		return user
 	
 	async def get_user_by_email(self, email: str) -> User | None:
+		"""Return the user with this email, or ``None`` if absent."""
 		res = await self.db_session.execute(
 			select(User).where(User.email == email)
 		)

@@ -7,17 +7,15 @@ from app.users.auth.security import hash_password, verify_password, get_access_t
 
 
 class AuthService:
-	"""
-	Service responsible for auth-related business logic.
-	
-	Handles user creation and getting access token
-	"""
+	"""Handle user registration and authentication logic."""
 	
 	def __init__(self, user_repository: UserRepository, settings: Settings):
+		"""Initialize the service with its repository and settings."""
 		self.user_repository = user_repository
 		self.settings = settings
 	
 	async def create_user(self, user_schema: UserCreateSchema):
+		"""Create a user with a hashed password."""
 		user = await self.user_repository.create_user(
 			User(email=user_schema.email, password=hash_password(user_schema.password))
 		)
@@ -25,6 +23,7 @@ class AuthService:
 		return UserReadSchema(id=user.id, email=user.email)
 	
 	async def get_jwt_token(self, user_schema: UserCreateSchema):
+		"""Validate credentials and return a signed access token."""
 		user = await self.user_repository.get_user_by_email(user_schema.email)
 		if not user:
 			raise UserDoesntExists

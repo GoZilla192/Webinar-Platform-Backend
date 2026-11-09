@@ -4,6 +4,7 @@ from app.infrastructure.database.base_model import Base
 
 
 class User(Base):
+	"""Database record for a registered user."""
 	__tablename__ = "users"
 	
 	id: Mapped[int] = mapped_column(

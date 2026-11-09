@@ -10,14 +10,17 @@ pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 
 def hash_password(password: str) -> str:
+	"""Hash a password for secure storage."""
 	return pwd_context.hash(password)
 
 
 def verify_password(password: str, password_hash: str) -> bool:
+	"""Check a password against its stored hash."""
 	return pwd_context.verify(password, password_hash)
 
 
 def get_access_token(user_id: int, settings: Settings) -> str:
+	"""Create a signed access token for a user."""
 	now = datetime.now(timezone.utc)
 	payload = {
 		"sub": str(user_id),
@@ -27,6 +30,7 @@ def get_access_token(user_id: int, settings: Settings) -> str:
 
 
 def get_decoded_token(token: str, *, settings: Settings) -> dict:
+	"""Decode and validate a signed access token."""
 	try:
 		return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
 	except ExpiredSignatureError as e:

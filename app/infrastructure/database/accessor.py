@@ -10,5 +10,6 @@ AsyncSessionFactory = async_sessionmaker(engine, expire_on_commit=False)
 
 
 async def get_db_session() -> AsyncSession:
+	"""Yield a database session for a request."""
 	async with AsyncSessionFactory() as session:
 		yield session

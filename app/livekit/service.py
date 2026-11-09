@@ -6,10 +6,13 @@ from app.livekit.schemas import LiveKitTokenRequestSchema, LiveKitTokenResponseS
 
 
 class LiveKitService:
+	"""Create access tokens for LiveKit rooms."""
 	def __init__(self, settings: Settings):
+		"""Initialize the service with application settings."""
 		self.settings = settings
 	
 	def get_token(self, token_request: LiveKitTokenRequestSchema) -> LiveKitTokenResponseSchema:
+		"""Create a room token with permissions from the request."""
 		grants = api.VideoGrants(
 			room_join=True,
 			room=token_request.room_name,

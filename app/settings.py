@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+	"""Application settings loaded from environment variables."""
 	LIVEKIT_URL: str
 	LIVEKIT_API_KEY: str
 	LIVEKIT_API_SECRET: str
@@ -23,5 +24,6 @@ class Settings(BaseSettings):
 	
 	@property
 	def url_db(self):
+		"""Build the async SQLAlchemy database URL."""
 		return (f"{self.DB_DRIVER}://{self.DB_USER}:"
 		        f"{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}")
