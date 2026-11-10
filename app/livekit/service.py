@@ -1,15 +1,18 @@
 from livekit import api
 from datetime import timedelta
 
-from app.livekit.settings import LiveKitSettings
+from app.settings import Settings
 from app.livekit.schemas import LiveKitTokenRequestSchema, LiveKitTokenResponseSchema
 
 
 class LiveKitService:
-	def __init__(self, settings: LiveKitSettings):
+	"""Create access tokens for LiveKit rooms."""
+	def __init__(self, settings: Settings):
+		"""Initialize the service with application settings."""
 		self.settings = settings
 	
 	def get_token(self, token_request: LiveKitTokenRequestSchema) -> LiveKitTokenResponseSchema:
+		"""Create a room token with permissions from the request."""
 		grants = api.VideoGrants(
 			room_join=True,
 			room=token_request.room_name,

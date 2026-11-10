@@ -1,0 +1,33 @@
+from app.auth.exceptions import UserDoesntExists, PasswordIncorrect
+from app.settings import Settings
+from app.users.repository import UserRepository
+from app.users.schemas import UserCreateSchema, UserReadSchema
+from app.users.models import User
+from app.auth.security import hash_password, verify_password, get_access_token
+
+
+class AuthService:
+	"""Handle user registration and authentication logic."""
+	
+	def __init__(self, user_repository: UserRepository, settings: Settings):
+		"""Initialize the service with its repository and settings."""
+		self.user_repository = user_repository
+		self.settings = settings
+	
+	async def create_user(self, user_schema: UserCreateSchema):
+		"""Create a user with a hashed password."""
+		user = await self.user_repository.create_user(
+			User(email=user_schema.email, password=hash_password(user_schema.password))
+		)
+		
+		return UserReadSchema(id=user.id, email=user.email)
+	
+	async def get_jwt_token(self, user_schema: UserCreateSchema):
+		"""Validate credentials and return a signed access token."""
+		user = await self.user_repository.get_user_by_email(user_schema.email)
+		if not user:
+			raise UserDoesntExists
+		if not verify_password(user_schema.password, user.password):
+			raise PasswordIncorrect
+		
+		return get_access_token(user.id, self.settings)
