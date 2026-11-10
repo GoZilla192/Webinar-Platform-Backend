@@ -1,9 +1,9 @@
-from app.users.auth.exceptions import UserDoesntExists, PasswordIncorrect
+from app.auth.exceptions import UserDoesntExists, PasswordIncorrect
 from app.settings import Settings
 from app.users.repository import UserRepository
 from app.users.schemas import UserCreateSchema, UserReadSchema
 from app.users.models import User
-from app.users.auth.security import hash_password, verify_password, get_access_token
+from app.auth.security import hash_password, verify_password, get_access_token
 
 
 class AuthService:

@@ -2,10 +2,10 @@ from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Depends, status
 
-from app.users.auth.service import AuthService
-from app.users.auth.exceptions import UserAlreadyExists, UserDoesntExists, PasswordIncorrect
+from app.auth.service import AuthService
+from app.auth.exceptions import UserAlreadyExists, UserDoesntExists, PasswordIncorrect
 from app.users.schemas import UserCreateSchema
-from app.users.auth.depends import get_auth_service
+from app.auth.depends import get_auth_service
 
 router = APIRouter(prefix="/user", tags=["Users"])
 
