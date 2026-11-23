@@ -3,6 +3,7 @@ from fastapi.security import HTTPAuthorizationCredentials
 from typing import Annotated
 
 from app.livekit.service import LiveKitService
+from app.livekit.schemas import LiveKitTokenResponseSchema
 from app.livekit.depends import get_livekit_service
 from app.livekit.exceptions import RoomDoesntExist
 from app.auth.security import bearer_schema
@@ -10,7 +11,7 @@ from app.auth.security import bearer_schema
 router = APIRouter(prefix="/room", tags=["LiveKit Server"])
 
 
-@router.post("/create")
+@router.post("/create", response_model=LiveKitTokenResponseSchema)
 async def create_room(
 		token: Annotated[HTTPAuthorizationCredentials, Depends(bearer_schema)],
 		livekit_service: LiveKitService = Depends(get_livekit_service)
@@ -18,7 +19,7 @@ async def create_room(
 	return await livekit_service.create_room(token.credentials)
 
 
-@router.get("/token/{room_id}", responses={
+@router.get("/token/{room_id}", response_model=LiveKitTokenResponseSchema, responses={
 	200: {
 		"description": "OK",
 	},
