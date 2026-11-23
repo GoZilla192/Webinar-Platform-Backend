@@ -9,16 +9,14 @@ from app.auth.depends import get_auth_service
 router = APIRouter(prefix="/user", tags=["Users"])
 
 
-@router.post("/signup",
-             status_code=status.HTTP_201_CREATED,
-             responses={
-	             201: {
-		             "description": "Created",
-	             },
-	             409: {
-		             "description": "Email already registered",
-	             },
-             },
+@router.post("/signup", status_code=status.HTTP_201_CREATED, responses={
+	201: {
+		"description": "Created",
+	},
+	409: {
+		"description": "Email already registered",
+	},
+},
              )
 async def signup(user: UserCreateSchema, svc: Annotated[AuthService, Depends(get_auth_service)]):
 	"""Register a user and return their public details."""
