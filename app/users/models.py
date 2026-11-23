@@ -1,4 +1,5 @@
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import List
 
 from app.infrastructure.database.base_model import Base
 
@@ -12,3 +13,6 @@ class User(Base):
 	)
 	email: Mapped[str] = mapped_column(nullable=False, unique=True)
 	password: Mapped[str] = mapped_column(nullable=False)
+	
+	rooms: Mapped[List["Room"]] = relationship(back_populates="host_user")
+	
