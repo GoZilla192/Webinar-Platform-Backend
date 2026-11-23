@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
+from fastapi.security import HTTPBearer
+
 from jose import jwt, JWTError, ExpiredSignatureError
 from jose.exceptions import JWEInvalidAuth
 from passlib.context import CryptContext
@@ -7,6 +9,7 @@ from passlib.context import CryptContext
 from app.settings import Settings  # SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
+bearer_schema = HTTPBearer()
 
 
 def hash_password(password: str) -> str:
@@ -29,7 +32,7 @@ def get_access_token(user_id: int, settings: Settings) -> str:
 	return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
-def get_decoded_token(token: str, *, settings: Settings) -> dict:
+def get_decoded_token(token: str, settings: Settings) -> dict:
 	"""Decode and validate a signed access token."""
 	try:
 		return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
@@ -39,3 +42,7 @@ def get_decoded_token(token: str, *, settings: Settings) -> dict:
 		raise ValueError("Invalid token") from e
 	except JWTError as e:
 		raise ValueError("Invalid authentication") from e
+
+# maybe it can be useful in future
+# def get_user_id(token: Annotated[HTTPAuthorizationCredentials, Depends(bearer_schema)]):
+# 	return get_decoded_token(token=token.credentials, settings=Settings())["sub"]
