@@ -5,7 +5,6 @@ class LiveKitTokenRequestSchema(BaseModel):
 	"""Parameters for requesting a LiveKit room token."""
 	room_name: str
 	is_host: bool
-	name: str
 	identity: str
 
 

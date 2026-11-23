@@ -1,5 +1,4 @@
 from typing import Annotated
-
 from fastapi import APIRouter, HTTPException, Depends, status
 
 from app.auth.service import AuthService
@@ -10,17 +9,14 @@ from app.auth.depends import get_auth_service
 router = APIRouter(prefix="/user", tags=["Users"])
 
 
-
-@router.post("/signup",
-             status_code=status.HTTP_201_CREATED,
-             responses={
-	             201: {
-		             "description": "Created",
-	             },
-	             409: {
-		             "description": "Email already registered",
-	             },
-	         },
+@router.post("/signup", status_code=status.HTTP_201_CREATED, responses={
+	201: {
+		"description": "Created",
+	},
+	409: {
+		"description": "Email already registered",
+	},
+},
              )
 async def signup(user: UserCreateSchema, svc: Annotated[AuthService, Depends(get_auth_service)]):
 	"""Register a user and return their public details."""
@@ -34,14 +30,14 @@ async def signup(user: UserCreateSchema, svc: Annotated[AuthService, Depends(get
 
 
 @router.post("/login", responses={
-	             200: {
-		             "description": "OK",
-	             },
-	             401: {
-		             "description": "Credentials incorrect",
-	             },
-	         },
-)
+	200: {
+		"description": "OK",
+	},
+	401: {
+		"description": "Credentials incorrect",
+	},
+},
+             )
 async def login(user: UserCreateSchema, svc: Annotated[AuthService, Depends(get_auth_service)]):
 	"""Authenticate a user and return an access token."""
 	try:

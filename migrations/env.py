@@ -26,6 +26,7 @@ if config.config_file_name is not None:
 
 from app.infrastructure.database.base_model import Base
 from app.users.models import User
+from app.livekit.models import Room
 
 target_metadata = Base.metadata
 
